@@ -1,22 +1,20 @@
 package com.gmail.tikrai.selenium;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.testng.Assert.assertEquals;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-class SelectorTest {
+public class SelectorTest {
   private WebDriver driver;
   private String attr;
 
-  @BeforeEach
+  @BeforeMethod
   public void setUp() {
     System.setProperty("webdriver.chrome.driver","C:\\java\\chromedriver.exe");
     ChromeOptions options = new ChromeOptions();
@@ -28,13 +26,13 @@ class SelectorTest {
   @Test
   public void shouldFindElementById() {
     attr = driver.findElement(By.id("email")).getAttribute("class");
-    assertThat(attr, equalTo("inputtext"));
+    assertEquals(attr, "inputtext");
   }
 
   @Test
   public void shouldFindElementByCssSelector() {
     attr = driver.findElement(By.cssSelector("input#email")).getAttribute("class");
-    assertThat(attr, equalTo("inputtext"));
+    assertEquals(attr, "inputtext");
   }
 
   @Test
@@ -42,17 +40,17 @@ class SelectorTest {
     String xpath =
         "/html/body/div[2]/div/div/div/div/div[1]/div/div/form/table/tbody/tr[2]/td[1]/input";
     attr = driver.findElement(By.xpath(xpath)).getAttribute("class");
-    assertThat(attr, equalTo("inputtext"));
+    assertEquals(attr, "inputtext");
   }
 
   @Test
   public void shouldFindElementByRelativeXpath() {
     String xpath = "//*[@id=\"login_form\"]/table/tbody/tr[2]/td[1]/input";
     attr = driver.findElement(By.xpath(xpath)).getAttribute("class");
-    assertThat(attr, equalTo("inputtext"));
+    assertEquals(attr, "inputtext");
   }
 
-  @AfterEach
+  @AfterMethod
   public void tearDown() {
     driver.quit();
   }

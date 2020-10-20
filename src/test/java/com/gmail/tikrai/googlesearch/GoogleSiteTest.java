@@ -1,26 +1,24 @@
 package com.gmail.tikrai.googlesearch;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.fail;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-class GoogleSiteTest {
+public class GoogleSiteTest {
   private WebDriver driver;
-  private String attr;
 
-  @BeforeEach
+  @BeforeMethod
   public void setUp() {
     System.setProperty("webdriver.chrome.driver","C:\\java\\chromedriver.exe");
     ChromeOptions options = new ChromeOptions();
@@ -30,7 +28,7 @@ class GoogleSiteTest {
 
   @Test
   public void shouldVerifyGoogleSearch() {
-    driver.get("http://www.google.com");
+    driver.get("https://www.google.com");
     WebDriverWait wait = new WebDriverWait(driver, 5);
 
     driver.switchTo().frame(0);
@@ -50,10 +48,8 @@ class GoogleSiteTest {
     searchField.submit();
 
     WebElement resultCount = driver.findElement(By.id("result-stats"));
-    System.out.println(resultCount.getText());
-    int i = Integer.parseInt(resultCount.getText().split("[\\D]{2,}")[1].replace(" ", ""));
-    System.out.println(i);
-    assertThat(i > 10000000, is(true));
+    int count = Integer.parseInt(resultCount.getText().split("[\\D]{2,}")[1].replace(" ", ""));
+    assertTrue(count > 10000000);
 
     driver.findElement(By.cssSelector("a[aria-label='Page 3']")).click();
 
@@ -64,16 +60,16 @@ class GoogleSiteTest {
         .click();
 
     WebElement logo = wait.until(presenceOfElementLocated(By.cssSelector("img[src='erdplus_logo_large.png']")));
-    assertThat(logo.isDisplayed(), is(true));
+    assertTrue(logo.isDisplayed());
 
     WebElement header = driver.findElement(By.xpath("//*[@id=\"root\"]/section/header/header"));
-    assertThat(header.getCssValue("background-color"), equalTo("rgba(83, 109, 254, 1)"));
+    assertEquals(header.getCssValue("background-color"), "rgba(83, 109, 254, 1)");
 
     WebElement text = driver.findElement(By.xpath("//*[contains(text(), 'production')]"));
-    assertThat(text.getText().matches(".*2020-05-24.*"), is(true));
+    assertTrue(text.getText().matches(".*2020-05-24.*"));
   }
 
-  @AfterEach
+  @AfterMethod
   public void tearDown() {
     driver.quit();
   }

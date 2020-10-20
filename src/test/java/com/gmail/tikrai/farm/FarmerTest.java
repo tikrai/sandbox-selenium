@@ -1,7 +1,8 @@
 package com.gmail.tikrai.farm;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,9 +10,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
-class FarmerTest {
+public class FarmerTest {
   private final Vegetable carrot = new Vegetable(1, "carrot", 10);
   private final Vegetable potato = new Vegetable(2, "potato", 10);
 
@@ -51,19 +52,18 @@ class FarmerTest {
 
   @Test
   void shouldVerifyFarmerIsOld() {
-    assertThat(oldFarmer.isOlderThan(50), equalTo(true));
+    assertTrue(oldFarmer.isOlderThan(50));
   }
 
   @Test
   void shouldVerifyFarmerIsYoung() {
-    assertThat(youngFarmer.isOlderThan(50), equalTo(false));
+    assertFalse(youngFarmer.isOlderThan(50));
   }
 
   @Test
   void shouldReturnGoodVegetables() {
     List<Vegetable> vegetables =
         Farmer.goodVegetables(Arrays.asList(oldFarmer, youngFarmer, chemicOldFarmer));
-
-    assertThat(vegetables, equalTo(Collections.singletonList(carrot)));
+    assertEquals(vegetables, Collections.singletonList(carrot));
   }
 }

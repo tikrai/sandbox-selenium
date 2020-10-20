@@ -1,5 +1,7 @@
 package com.gmail.tikrai.farm;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Date;
@@ -33,9 +35,8 @@ public class Farmer {
   }
 
   public boolean isOlderThan(int years) {
-    return new Date().toInstant()
-        .minus(ChronoUnit.YEARS.getDuration().multipliedBy(years))
-        .isAfter(birthday.toInstant());
+    return Duration.between(birthday.toInstant(), Instant.now())
+        .compareTo(ChronoUnit.YEARS.getDuration().multipliedBy(years)) > 0;
   }
 
   public boolean isOlderThan50() {
