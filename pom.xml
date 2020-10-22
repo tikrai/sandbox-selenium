@@ -51,7 +51,8 @@
         <version>2.22.0</version>
         <configuration>
           <suiteXmlFiles>
-            <suiteXmlFile>src\test\resources\allTests.xml</suiteXmlFile>
+            <suiteXmlFile>src\test\resources\otherTests.xml</suiteXmlFile>
+<!--            <suiteXmlFile>src\test\resources\allTests.xml</suiteXmlFile>-->
           </suiteXmlFiles>
           <systemPropertyVariables>
             <testng.dtd.http>true</testng.dtd.http>
