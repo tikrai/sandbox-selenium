@@ -4,28 +4,39 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class GoogleSiteTest {
   private WebDriver driver;
 
   @BeforeMethod
-  public void setUp() {
-    System.setProperty("webdriver.chrome.driver", "C:\\java\\chromedriver.exe");
-    System.setProperty("webdriver.gecko.driver",  "C:\\java\\geckodriver.exe");
-//    ChromeOptions options = new ChromeOptions();
-//    options.setHeadless(true);
-
-//    driver = new ChromeDriver();
-    driver = new FirefoxDriver();
+  @Parameters("browser")
+  public void setup(String browser) throws Exception{
+    if (browser.equalsIgnoreCase("firefox")) {
+      System.setProperty("webdriver.gecko.driver", "C:\\java\\geckodriver.exe");
+      driver = new FirefoxDriver();
+    } else if (browser.equalsIgnoreCase("chrome")) {
+      System.setProperty("webdriver.chrome.driver","C:\\java\\chromedriver.exe");
+      driver = new ChromeDriver();
+//    } else if (browser.equalsIgnoreCase("Edge")) {
+//      System.setProperty("webdriver.edge.driver",".\\MicrosoftWebDriver.exe");
+//      driver = new EdgeDriver();
+    } else {
+      throw new Exception("Browser is not correct");
+    }
+    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
   }
+
 
   @Test
   public void shouldVerifyGoogleSearch() {
