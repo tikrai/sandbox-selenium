@@ -64,6 +64,6 @@ public class FarmerTest {
   void shouldReturnGoodVegetables() {
     List<Vegetable> vegetables =
         Farmer.goodVegetables(Arrays.asList(oldFarmer, youngFarmer, chemicOldFarmer));
-    assertEquals(vegetables, Collections.singletonList(carrot));
+    assertEquals(vegetables, Collections.singletonList(potato));
   }
 }
