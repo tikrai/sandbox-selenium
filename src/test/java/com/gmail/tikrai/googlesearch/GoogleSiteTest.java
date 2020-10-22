@@ -1,15 +1,13 @@
 package com.gmail.tikrai.googlesearch;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -20,10 +18,13 @@ public class GoogleSiteTest {
 
   @BeforeMethod
   public void setUp() {
-    System.setProperty("webdriver.chrome.driver","C:\\java\\chromedriver.exe");
-    ChromeOptions options = new ChromeOptions();
-    options.setHeadless(true);
-    driver = new ChromeDriver();
+    System.setProperty("webdriver.chrome.driver", "C:\\java\\chromedriver.exe");
+    System.setProperty("webdriver.gecko.driver",  "C:\\java\\geckodriver.exe");
+//    ChromeOptions options = new ChromeOptions();
+//    options.setHeadless(true);
+
+//    driver = new ChromeDriver();
+    driver = new FirefoxDriver();
   }
 
   @Test
@@ -36,6 +37,8 @@ public class GoogleSiteTest {
     WebElement agree = wait.until(presenceOfElementLocated(By.id("introAgreeButton")));
     agree.click();
 
+    driver.switchTo().defaultContent();
+
     try {
       agree = driver.findElement(By.id("introAgreeButton"));
       fail("Agree button still visible: " + agree);
@@ -47,7 +50,7 @@ public class GoogleSiteTest {
     searchField.sendKeys("sql table online");
     searchField.submit();
 
-    WebElement resultCount = driver.findElement(By.id("result-stats"));
+    WebElement resultCount = wait.until(presenceOfElementLocated(By.id("result-stats")));
     int count = Integer.parseInt(resultCount.getText().split("[\\D]{2,}")[1].replace(" ", ""));
     assertTrue(count > 10000000);
 
@@ -63,7 +66,7 @@ public class GoogleSiteTest {
     assertTrue(logo.isDisplayed());
 
     WebElement header = driver.findElement(By.xpath("//*[@id=\"root\"]/section/header/header"));
-    assertEquals(header.getCssValue("background-color"), "rgba(83, 109, 254, 1)");
+    assertTrue(header.getCssValue("background-color").matches(".*83, 109, 254.*"));
 
     WebElement text = driver.findElement(By.xpath("//*[contains(text(), 'production')]"));
     assertTrue(text.getText().matches(".*2020-05-24.*"));
