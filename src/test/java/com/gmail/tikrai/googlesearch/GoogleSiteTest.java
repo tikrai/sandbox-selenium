@@ -4,7 +4,6 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -49,7 +48,6 @@ public class GoogleSiteTest {
     } else {
       throw new Exception("Browser is not correct");
     }
-    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
   }
 
   @Test
