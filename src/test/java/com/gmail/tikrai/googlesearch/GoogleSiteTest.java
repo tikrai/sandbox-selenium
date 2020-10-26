@@ -22,11 +22,26 @@ public class GoogleSiteTest {
   @BeforeMethod
   @Parameters("browser")
   public void setup(String browser) throws Exception{
+
+    String chromeDriverPath;
+    String geckoDriverPath;
+
+    String osName = System.getProperty("os.name");
+    if (osName.equals("Linux")) {
+      chromeDriverPath = "src/test/resources/chromedriver-v86";
+      geckoDriverPath = "src/test/resources/geckodriver";
+    } else if (osName.equals("Windows")) {
+      chromeDriverPath = "C:\\java\\chromedriver.exe";
+      geckoDriverPath = "C:\\java\\geckodriver.exe";
+    } else {
+      throw new RuntimeException("Unsupported OS");
+    }
+
     if (browser.equalsIgnoreCase("firefox")) {
-      System.setProperty("webdriver.gecko.driver", "C:\\java\\geckodriver.exe");
+      System.setProperty("webdriver.gecko.driver", geckoDriverPath);
       driver = new FirefoxDriver();
     } else if (browser.equalsIgnoreCase("chrome")) {
-      System.setProperty("webdriver.chrome.driver","C:\\java\\chromedriver.exe");
+      System.setProperty("webdriver.chrome.driver", chromeDriverPath);
       driver = new ChromeDriver();
 //    } else if (browser.equalsIgnoreCase("Edge")) {
 //      System.setProperty("webdriver.edge.driver",".\\MicrosoftWebDriver.exe");
@@ -36,7 +51,6 @@ public class GoogleSiteTest {
     }
     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
   }
-
 
   @Test
   public void shouldVerifyGoogleSearch() {
