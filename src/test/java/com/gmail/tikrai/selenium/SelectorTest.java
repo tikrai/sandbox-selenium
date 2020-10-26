@@ -5,8 +5,6 @@ import static org.testng.Assert.assertEquals;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,23 +15,18 @@ public class SelectorTest {
 
   @BeforeMethod
   public void setUp() {
-    switch (System.getProperty("os.name")) {
-      case "Linux":
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver-v86");
-        System.setProperty("webdriver.gecko.driver",  "src/test/resources/geckodriver");
-        break;
-
-      case "Windows":
-        System.setProperty("webdriver.chrome.driver", "C:\\java\\chromedriver.exe");
-        System.setProperty("webdriver.gecko.driver",  "C:\\java\\geckodriver.exe");
-        break;
-
-      default:
-        throw new RuntimeException("Unsupported OS");
+    String osName = System.getProperty("os.name");
+    System.out.println(osName);
+    if (osName.equals("Linux")) {
+      System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver-v86");
+      System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
+    } else if (osName.matches("Windows.*")) {
+      System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
+      System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver.exe");
+    } else {
+      throw new RuntimeException("Unsupported OS");
     }
 
-    System.setProperty("webdriver.chrome.driver","src/test/resources/chromedriver-v86");
-    System.setProperty("webdriver.gecko.driver","src/test/resources/geckodriver");
 //    ChromeOptions options = new ChromeOptions();
 //    options.setHeadless(true);
     driver = new ChromeDriver();

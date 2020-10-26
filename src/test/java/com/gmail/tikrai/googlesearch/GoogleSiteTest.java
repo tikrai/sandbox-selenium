@@ -30,9 +30,9 @@ public class GoogleSiteTest {
     if (osName.equals("Linux")) {
       chromeDriverPath = "src/test/resources/chromedriver-v86";
       geckoDriverPath = "src/test/resources/geckodriver";
-    } else if (osName.equals("Windows")) {
-      chromeDriverPath = "C:\\java\\chromedriver.exe";
-      geckoDriverPath = "C:\\java\\geckodriver.exe";
+    } else if (osName.matches("Windows.*")) {
+      chromeDriverPath = "src/test/resources/chromedriver.exe";
+      geckoDriverPath = "src/test/resources/geckodriver.exe";
     } else {
       throw new RuntimeException("Unsupported OS");
     }
