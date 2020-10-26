@@ -10,12 +10,12 @@
       <package name="com.gmail.tikrai.googlesearch"/>
     </packages>
   </test>
-  <test name="FirefoxTest">
-    <parameter name="browser" value="Firefox" />
-    <packages>
-      <package name="com.gmail.tikrai.googlesearch"/>
-    </packages>
-  </test>
+<!--  <test name="FirefoxTest">-->
+<!--    <parameter name="browser" value="Firefox" />-->
+<!--    <packages>-->
+<!--      <package name="com.gmail.tikrai.googlesearch"/>-->
+<!--    </packages>-->
+<!--  </test>-->
 <!--  <test name="EdgeTest">-->
 <!--    <parameter name="browser" value="Edge" />-->
 <!--    <classes>-->
