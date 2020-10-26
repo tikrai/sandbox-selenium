@@ -37,4 +37,7 @@ jobs:
         ./.github/workflows/InstallChrome.sh
 
     - name: Build with Maven
+      env:
+        CBT_USERNAME: ${{ secrets.CBT_USERNAME }}
+        CBT_AUTHKEY: ${{ secrets.CBT_AUTHKEY }}
       run: mvn -B verify
